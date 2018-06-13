@@ -37,10 +37,32 @@ class Player {
   render () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);    
   }
-  handleInput () {
-
+  handleInput (arrowKey) {
+    switch (arrowKey) {
+      case 'left':
+        if (this.x > 0) {
+            this.x -= 100;
+        }
+        break;
+      case 'up':
+        if (this.y > 0) {
+            this.y -= 85;
+            }
+            break;
+      case 'right':
+        if (this.x < 400) {
+            this.x += 100;
+        }
+            break;
+      case 'down':
+        if (this.y < 400) {
+            this.y += 85;
+        }
+            break;
+    }
   }
 }
+
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
