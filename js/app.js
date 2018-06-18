@@ -79,13 +79,22 @@ class Player {
     this.sprite = 'images/char-boy.png';
   }
   update () {
+    //Check for collision with player
 
+    for (let i = 0; i < allEnemies.length; i++) {
+        if (this.y === allEnemies[i].y && this.x >= allEnemies[i].x - 50 && this.x <= allEnemies[i].x + 50) {
+            console.log(' this x ' + this.x + ' enemy x ' + allEnemies[i].x + ' this y ' + this.y + ' enemy y ' + allEnemies[i].y);
+          this.x = 200;
+          this.y = 400;
+          break;
+        }    
+      };
   }
   render () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);    
   }
   handleInput (arrowKey) {
-    console.log('x= '+ this.x + ' y= ' + this.y);
+    //console.log('x= '+ this.x + ' y= ' + this.y);
     switch (arrowKey) {
       case 'left':
         if (this.x > 0) {
