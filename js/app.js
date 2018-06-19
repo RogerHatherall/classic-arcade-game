@@ -79,16 +79,22 @@ class Player {
     this.sprite = 'images/char-boy.png';
   }
   update () {
-    //Check for collision with player
+    //Check to see if player has reached the water
+    console.log("y is "+ this.y);
+    if (this.y === -25) {
+      this.y = -20;
+      gameOver();
+    }
 
+    //Check enemies for collision with player
     for (let i = 0; i < allEnemies.length; i++) {
-        if (this.y === allEnemies[i].y && this.x >= allEnemies[i].x - 50 && this.x <= allEnemies[i].x + 50) {
-            console.log(' this x ' + this.x + ' enemy x ' + allEnemies[i].x + ' this y ' + this.y + ' enemy y ' + allEnemies[i].y);
-          this.x = 200;
-          this.y = 400;
-          break;
-        }    
-      };
+      if (this.y === allEnemies[i].y && this.x >= allEnemies[i].x - 50 && this.x <= allEnemies[i].x + 50) {
+      // console.log(' this x ' + this.x + ' enemy x ' + allEnemies[i].x + ' this y ' + this.y + ' enemy y ' + allEnemies[i].y);
+        this.x = 200;
+        this.y = 400;
+        break;
+      }    
+    };
   }
   render () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);    
@@ -125,8 +131,8 @@ class Player {
 // Place the player object in a variable called player
 const allEnemies = [];
 const enemy1 = new Enemy(-100, 230, 'enemy1', 100);
-const enemy2 = new Enemy(-200, 145, 'enemy2', 100);
-const enemy3 = new Enemy(-300, 60, 'enemy3', 100);
+const enemy2 = new Enemy(-200, 145, 'enemy2', 200);
+const enemy3 = new Enemy(-300, 60, 'enemy3', 300);
 const enemy4 = new Enemy(-200, 230, 'enemy4', 100);
 const enemy5 = new Enemy(-300, 145, 'enemy5', 100);
 const enemy6 = new Enemy(-400, 60, 'enemy6', 100);
@@ -151,3 +157,23 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+//Create a pop up when the game is won
+function gameOver () {
+  console.log("function gameOver called: ");
+  const modal = document.createElement('div');
+  modal.className = "modal";
+  modal.innerHTML = `<h1 class="modh1"></h1><p class="modp1"></p><Button class="modbtn" onclick="newGame()" style="width: 100px; height: 25px; background-color: green;">Reset</>`;
+  modal.style.cssText = "width: 300px; height: 200px; background-color: white; position: fixed; top: 50%; left: 50%; margin-top: -100px; margin-left: -150px; border: 5px; border-style: solid; border-color: black; border-radius: 5px; text-align: center";
+  const headerDiv = document.querySelector('body');
+  headerDiv.appendChild(modal);
+  const headerTxt = document.querySelector('.modh1');
+  headerTxt.textContent = "Congratulations";
+  const p1Txt = document.querySelector('.modp1');
+  modTxt = "Press the reset button to play again";
+  p1Txt.textContent = modTxt;
+ }
+// Reset button in a popup modal
+newGame = () => {
+  location.reload();
+}
